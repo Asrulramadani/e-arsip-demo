@@ -91,6 +91,6 @@ require("./app/routes")(app);
 
 // running app on port based on .env file
 
-app.listen(process.env.PORT || 8080, () => {
+app.listen(5000, () => {
   console.log(`🚀Server running at : http://localhost:${PORT} 🚀`);
 });
