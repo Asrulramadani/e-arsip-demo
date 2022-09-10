@@ -90,7 +90,8 @@ require("./app/routes")(app);
 // db.user.create(user);
 
 // running app on port based on .env file
+const PORT = process.env.PORT || 8000
 
-app.listen(8000, () => {
+app.listen(PORT, () => {
   console.log(`🚀Server running at : http://localhost:${PORT} 🚀`);
 });
