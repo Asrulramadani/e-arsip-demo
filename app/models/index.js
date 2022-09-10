@@ -1,4 +1,4 @@
-let dbConfig = require("../config/db.config.json");
+
 const Sequelize = require("sequelize");
 // const status = "development";
 
