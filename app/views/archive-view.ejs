@@ -1,0 +1,99 @@
+<div id="page-wrapper">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-12">
+        <h1 class="page-header"><%= title %></h1>
+      </div>
+      <!-- /.col-lg-12 -->
+    </div>
+
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="col-lg-12">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h4>Detail Arsip</h4>
+            </div>
+            <div class="panel-body">
+              <div class="row">
+                <div class="col-md-4">
+                  <table>
+                    <tr>
+                      <th width="100px">No. Arsip</th>
+                      <th width="12px">:</th>
+                      <td><%= result.number %></td>
+                    </tr>
+                    <tr>
+                      <th>Nama Arsip</th>
+                      <th width="12px">:</th>
+                      <td><%= result.name %></td>
+                    </tr>
+                    <tr>
+                      <th>Deskripsi</th>
+                      <th width="12px">:</th>
+                      <td><%= result.desc %></td>
+                    </tr>
+                    <tr>
+                      <th>Kategori</th>
+                      <th width="12px">:</th>
+                      <td><%= result.category.name %></td>
+                    </tr>
+                    <tr>
+                      <th>Departemen</th>
+                      <th width="12px">:</th>
+                      <td><%= result.departement.name %></td>
+                    </tr>
+                  </table>
+                </div>
+                <div class="col-md-5 col-md-offset-3">
+                  <table>
+                    <tr>
+                      <th width="100px">Tgl. Upload</th>
+                      <th width="12px">:</th>
+                      <td>
+                        <%= new Date(result.createdAt).toLocaleString() %>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>Tgl. Update</th>
+                      <th width="12px">:</th>
+                      <td>
+                        <%= new Date(result.updatedAt).toLocaleString() %>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>Ukuran File</th>
+                      <th width="12px">:</th>
+                      <td><%= result.file_size %> MB</td>
+                    </tr>
+                    <tr>
+                      <th>Nama User</th>
+                      <th width="12px">:</th>
+                      <td><%= result.user.username %></td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+              <br />
+              <br />
+              <div class="row">
+                <div class="col text-center">
+                  <iframe
+                    src="/file/archives/<%= result.file_name %> "
+                    id="archive-frame"
+                    frameborder="0"
+                    width="100%"
+                    height="700px"
+                    title="Detail Arsip"
+                  ></iframe>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /.col-lg-12 -->
+    </div>
+  </div>
+  <!-- /#page-wrapper -->
+</div>

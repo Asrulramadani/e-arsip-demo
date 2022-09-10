@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+
+    <title><%= title %> | E-arsip</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- MetisMenu CSS -->
+    <link href="/static/css/metisMenu.min.css" rel="stylesheet" />
+
+    <!-- DataTables CSS -->
+    <link
+      href="/static/css/dataTables/dataTables.bootstrap.css"
+      rel="stylesheet"
+    />
+
+    <!-- DataTables Responsive CSS -->
+    <link
+      href="/static/css/dataTables/dataTables.responsive.css"
+      rel="stylesheet"
+    />
+
+    <!-- Custom CSS -->
+    <link href="/static/css/startmin.css" rel="stylesheet" />
+
+    <!-- Custom Fonts -->
+    <link
+      href="/static/css/font-awesome.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+
+    <!-- sweetalert -->
+    <script src="/static/js/sweetalert2.min.js"></script>
+    <link rel="stylesheet" href="/static/css/sweetalert2.min.css" />
+  </head>
+  <body>
+    <div id="wrapper">
+      <% if (isLogin) { %>
+
+      <!-- Navigation -->
+      <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="/">E-arsip </a>
+        </div>
+
+        <button
+          type="button"
+          class="navbar-toggle"
+          data-toggle="collapse"
+          data-target=".navbar-collapse"
+        >
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+
+        <ul class="nav navbar-right navbar-top-links">
+          <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+              <i class="fa fa-user fa-fw"></i> <%= username %>
+              <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu dropdown-user">
+              <li>
+                <a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
+              </li>
+              <li class="divider"></li>
+              <li>
+                <a href="/logout"
+                  ><i class="fa fa-sign-out fa-fw"></i> Logout</a
+                >
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <div class="navbar-default sidebar" role="navigation">
+          <div class="sidebar-nav navbar-collapse">
+            <ul class="nav" id="side-menu">
+              <br />
+              <li>
+                <a href="/dashboard"
+                  ><i class="fa fa-dashboard fa-fw"></i> Dashboard</a
+                >
+              </li>
+              <li>
+                <a href="/archives"
+                  ><i class="fa fa-folder-open fa-fw"></i> Arsip</a
+                >
+              </li>
+              <li>
+                <a href="/categories"
+                  ><i class="fa fa-tags fa-fw"></i> Kategori</a
+                >
+              </li>
+              <% if (level === "admin") { %>
+              <li>
+                <a href="/departements"
+                  ><i class="fa fa-building fa-fw"></i> Departemen</a
+                >
+              </li>
+              <li>
+                <a href="/users"><i class="fa fa-users fa-fw"></i> User</a>
+              </li>
+              <% } %>
+            </ul>
+          </div>
+          <!-- /.sidebar-collapse -->
+        </div>
+        <!-- /.navbar-static-side -->
+      </nav>
+      <!-- /.navbar-top-links -->
+
+      <!-- Body -->
+      <%- body %>
+      <!-- end Body -->
+
+      <% } else { %>
+      <!-- Page Content -->
+      <br />
+      <br />
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-8">
+            <div class="alert alert-danger">
+              Anda harus login terlebih dahulu agar dapat mengakses halaman ini.
+              <a href="/" class="alert-link">Login</a>.
+            </div>
+          </div>
+          <!-- /.col-lg-12 -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+      <% } %>
+    </div>
+
+    <!-- jQuery -->
+    <script src="/static/js/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="/static/js/bootstrap.min.js"></script>
+
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="/static/js/metisMenu.min.js"></script>
+
+    <!-- DataTables JavaScript -->
+    <script src="/static/js/dataTables/jquery.dataTables.min.js"></script>
+    <script src="/static/js/dataTables/dataTables.bootstrap.min.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="/static/js/startmin.js"></script>
+
+    <!-- Page-Level Demo Scripts - Tables - Use for reference -->
+    <script>
+      $(document).ready(function () {
+        $("#dataTables").DataTable({
+          responsive: true,
+        });
+      });
+    </script>
+
+    <!-- sweet alert script -->
+    <script>
+      function confirmDelete(url) {
+        Swal.fire({
+          title: "Apakah anda yakin ingin menghapus?",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Hapus",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            Swal.fire("Terhapus!", "Berhasil menghapus.", "success");
+            window.location = url;
+          }
+        });
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,178 @@
+
+    <!-- Page Content -->
+    <div id="page-wrapper">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-lg-12">
+            <h1 class="page-header"><%= title %> </h1>
+          </div>
+          <!-- /.col-lg-12 -->
+        </div>
+        <!-- /.row -->
+
+        <% if (success.length !== 0) { %>
+          <div class="row">
+          <div class="col-md-8">
+            <div class="alert alert-success alert-dismissible">
+              <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+              <%= success %> 
+            </div>
+          </div>
+          </div>
+
+        <% } %>
+
+      <% if (failed.length !== 0) { %>
+          <div class="row">
+          <div class="col-md-8">
+            <div class="alert alert-danger alert-dismissible">
+              <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+              <%= failed %> 
+            </div>
+          </div>
+          </div>
+        <% } %>
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="panel panel-default">
+            <div class="panel-heading" 
+              style="
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+              "
+            >            
+               <h4>Data Arsip</h4>
+                <button class="btn btn-success" data-toggle="modal" data-target="#addModal"><i class="fa fa-plus"></i> Tambah</button>
+
+
+                <!-- modal -->
+                <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none; ">
+                  <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                          <div class="modal-header">
+                              <h4 class="modal-title" id="myModalLabel">Tambah Arsip</h4>
+                          </div>
+                          <div class="modal-body">
+                            <form action="/archives/add" method="post" role="form" enctype="multipart/form-data">
+                              <div class="form-group">
+                                <label>No. Arsip</label>
+                                <input type="text" class="form-control" id="disabledInput" value="<%= archiveNumber %> " disabled>
+                                <input type="hidden" class="form-control" id="disabledInput" name="number" value="<%= archiveNumber %> " >
+                            </div>
+                            <div class="form-group">
+                              <label>Nama File</label>
+                              <input type="text" class="form-control" name="name" required autofocus >
+                          </div>
+                          <div class="form-group">
+                            <label>Kategori</label>
+                            <select class="form-control" name="categoryId" required>
+                                <option selected disabled>-- Pilih Kategori --</option>
+                                <% if (categories) { %>
+                                 <% categories.forEach(category => { %>
+                                  <option value="<%= category.id %> "><%= category.name %> </option>
+                                 <% }) %>
+                                <% } %>
+                            </select>
+                          </div>
+                          <div class="form-group">
+                            <label>Deskripsi</label>
+                            <textarea class="form-control" rows="3" placeholder="Deskripsi" name="desc" required></textarea>
+                          </div>
+
+                          <div class="form-group">
+                            <label>File</label>
+                            <input type="file" name="archiveFile" required>
+                          </div>
+
+                          </div>
+
+                          <div class="modal-footer">
+                            
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+                            <button type="submit" class="btn btn-primary">Simpan</button>
+                              
+                          </div>
+                          </form>
+                      </div>
+                      <!-- /.modal-content -->
+                  </div>
+                  <!-- /.modal-dialog -->
+              </div>
+                <!-- /modal -->
+            </div>
+            <!-- /.panel-heading -->
+            <div class="panel-body">
+              <div class="table-responsive">
+                <table class="table table-striped table-bordered table-hover" id="dataTables">
+                  <thead>
+                    <tr>
+                      <th>Nomor</th>
+                      <th>No. Arsip</th>
+                      <th>Nama Arsip</th>
+                      <th>Kategori</th>
+                      <th>Tgl. Upload</th>
+                      <th>Tgl. Update</th>
+                      <th>User</th>
+                      <th>Departemen</th>
+                      <th>File</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                      <% if (results) { %>
+                       <% results.forEach((result, i) => { %>
+                        
+                        <tr class="<% (i % 2 != 0) ? "even" : "odd"%>">
+                          <td class="text-center"><%= i + 1 %> </td>
+                              <td class="text-center"><%= result.number %> </td>
+                              <td class="text-center"><%= result.name %> </td>
+
+                              <% if (result.category) { %>
+                                <td class="text-center">
+                                  <a href="/archives/category/<%= result.category.id %> "><%= result.category.name %></a>
+                                </td>
+                              <% } else { %>
+                                <td class="text-center">tidak ada</td>
+                              <% } %> 
+
+                              <td class="text-center"><%= new Date(result.createdAt).toLocaleString() %> </td>
+                              <td class="text-center"><%= new Date(result.updatedAt).toLocaleString() %> </td>
+
+                              <% if (result.user) { %>
+                                <td class="text-center"><%= result.user.username %> </td>
+                              <% } else { %>
+                                <td class="text-center">tidak ada</td>
+                              <% } %> 
+
+                              <% if (result.departement) { %>
+                                <td class="text-center"><%= result.departement.name %> </td>
+                              <% } else { %>
+                                <td class="text-center">tidak ada</td>
+                              <% } %> 
+                              
+                              <td class="text-center"><a href="/archives/view/<%= result.id %>"><i class="fa fa-file-pdf-o fa-2x"></i><br><%= result.file_size %> MB</a></td>
+                              <td>
+                                <a href="/archives/edit/<%= result.id %>" class="btn btn-success">Edit</a>
+                                <button onclick="confirmDelete('/archives/del/<%= result.id %>')"  class="btn btn-danger">Hapus</button>
+                              </td>
+                          </tr>
+                       <% }) %>
+                      <% } %>
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.table-responsive -->
+            </div>
+            <!-- /.panel-body -->
+          </div>
+          <!-- /.panel -->
+        </div>
+        <!-- /.col-lg-12 -->
+      </div>
+      <!-- /.row -->
+
+      </div>
+      <!-- /.container-fluid -->
+    </div>
+    <!-- /#page-wrapper -->
