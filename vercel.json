@@ -2,9 +2,9 @@
   "version": 2,
   "builds": [{
     "src": "./server.js",
-    "use": "@now/node-server"
+    "use": "@vercel/node-server"
   }],
-  "routes": [{"handle": "filesystem"},
+  "routes":[
     {
       "src": "/.*",
       "dest": "server.js"
